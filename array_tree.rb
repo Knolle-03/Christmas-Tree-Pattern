@@ -5,20 +5,23 @@
 
 # Class description
 class ArrayTree
-  def initialize(n)
-    raise ArgumentError, "Argument must be Integer greater than 0." unless n.is_a?(Integer) && n > 0
+  def initialize(order)
+    raise ArgumentError, "Argument must be Integer greater than 0." unless order.is_a?(Integer) && order > 0
 
+    @order = order
     @tree = [%w[0 1]]
-    grow_new_tree(n)
+    grow_new_tree(order)
   end
 
   def show_tree
-    # put tree here
-    @tree.to_s
-  end
+    space = ' ' * (@order + 1)
+    width = @order + 1
 
-  def tree
-    @tree.join("\n")
+    @tree.each do |row|
+      background = (width - row.size) / 2
+      puts space * background + row.join(' ') + space * background
+
+    end
   end
 
   private
@@ -34,7 +37,10 @@ class ArrayTree
   def grow_one_order
     skip_next = false
     @tree.each_with_index do |row, index|
-      next if skip_next
+      if skip_next
+        skip_next = false
+        next
+      end
       skip_next = grow_row(row, index)
     end
   end
@@ -47,17 +53,16 @@ class ArrayTree
       tmp = []
       row.each_with_index { |element, i| tmp << element.dup if i > 1 }
       @tree.insert(index, tmp)
-      # @tree.insert(index, row.drop(2).dup)
+        # add 0s in first line if it was inserted
+      @tree[index].each { |element| element << '0' }
       skip_next = true
     end
-      # add 0s in first line and 0,1,1... in second line
-    @tree[index].each { |element| element << '0' }
+      # add 0,1,1... in second line
     row.each_with_index { |element, i| element << ( i < 1 ? '0' : '1' ) }
 
     skip_next
   end
 end
 
-tree = ArrayTree.new(3)
-puts tree.tree
+tree = ArrayTree.new(5)
 tree.show_tree

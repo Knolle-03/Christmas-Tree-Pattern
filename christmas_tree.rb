@@ -43,6 +43,7 @@ end
 
 t1 = ChristmasTree.new(4)
 t1.create_tree
+puts t1.binomial_coefficient(8)
 
 
 
