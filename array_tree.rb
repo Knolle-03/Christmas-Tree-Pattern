@@ -3,7 +3,8 @@
 # Author:: Lennart Draeger
 # Author:: Robert Gnehr
 
-# Class description
+# The ArrayTree Class gets an Integer as an argument and creates an ArrayTree of bit strings.
+# The method show thee is called to print out the tree to the console.
 class ArrayTree
   def initialize(order)
     raise ArgumentError, 'Argument must be an Integer greater than 0.' unless order.is_a?(Integer) && order > 0
@@ -58,3 +59,7 @@ class ArrayTree
     @tree[index].each { |element| element << '0' }
   end
 end
+
+tree = ArrayTree.new(6)
+tree.show_tree
+
