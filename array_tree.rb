@@ -58,6 +58,3 @@ class ArrayTree
     @tree[index].each { |element| element << '0' }
   end
 end
-
-tree = ArrayTree.new(4)
-tree.show_tree
